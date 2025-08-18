@@ -37,7 +37,7 @@ async def is_cuii_blocked_single(domain: str, resolver: t.DNSResolver) -> t.Sing
         elif resolver.blocking_type == t.BlockingType.CNAME:
             # check if the response contains a CNAME record and if it points to "notice.cuii.info"
             for record in res.an:
-                if record.qtype == types.CNAME and record.data and record.data.data == "notice.cuii.info":
+                if record.qtype == types.CNAME and record.data and record.data.data in ("notice.cuii.info", "cuii-landingpage.telekom.com"):
                     resp = t.SingleProbeResponseType.BLOCKED
 
         return t.SingleProbeResponse(resp, duration, domain, resolver)
