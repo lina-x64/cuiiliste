@@ -27,7 +27,7 @@ def make_rss_feed(headers):
     for domain in blocked_domains:
         item = Xml.SubElement(channel, 'item')
         Xml.SubElement(item, 'title').text   = f'Domain Blocked By CUII: {domain.domain}'
-        Xml.SubElement(item, 'pubDate').text = email.utils.format_datetime(domain.first_blocked_on, True)
+        Xml.SubElement(item, 'pubDate').text = email.utils.format_datetime(domain.first_blocked_on.astimezone(datetime.UTC), True)
 
         guid = Xml.SubElement(item, 'guid')
         # this URL does not have to exist, we're just using our domain to namespace the other two fields
