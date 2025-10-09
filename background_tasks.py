@@ -35,8 +35,8 @@ async def update_dns_blocklist(resolvers: list[t.DNSResolver]):
 
         # if all ISPs have not blocked the domain, remove the domain from the blocklist
         if results.final_result == t.FullProbeResponseType.NOT_BLOCKED:
-            notifications.domain_unblocked(domain.domain)
-            database.remove_blocked_domain(domain.domain)
+            if database.remove_blocked_domain(domain.domain):
+                notifications.domain_unblocked(domain.domain)
             continue
 
 

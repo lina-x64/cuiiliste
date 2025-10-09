@@ -257,7 +257,9 @@ def remove_blocked_domain(domain: str):
                     """,
             (domain,)
         )
+        was_deleted = cursor.rowcount > 0
         connection.commit()
+    return was_deleted
 
 
 def get_ignorelist() -> list[str]:
