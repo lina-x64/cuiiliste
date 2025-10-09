@@ -1,8 +1,9 @@
-from flask import Flask, request
+from flask import Flask, request, make_response
 from dotenv import load_dotenv
 import background_tasks
 import database
 import middleware
+from rss import make_rss_feed
 from textwrap import dedent
 
 load_dotenv()
@@ -46,6 +47,16 @@ def get_resolvers():
 @app.route('/blocked_domains')
 def get_blocked_domains():
     return middleware.get_blocked_domains()
+
+
+@app.route('/blocks.rss')
+def serve_rss_feed():
+    rss = make_rss_feed(request.headers)
+    # rss[0]: xml content,
+    # rss[1]: status int,
+    # rss[2]: headers
+    r = make_response(rss[0], rss[1], rss[2])
+    return r
 
 
 @app.after_request
