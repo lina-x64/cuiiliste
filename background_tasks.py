@@ -41,6 +41,7 @@ async def update_dns_blocklist(resolvers: list[t.DNSResolver]):
 
 
 async def background_loop(resolvers: list[t.DNSResolver]):
+    return
     while True:
         start_time = asyncio.get_event_loop().time()
         await update_resolver_health(resolvers)
